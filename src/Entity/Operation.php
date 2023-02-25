@@ -13,6 +13,11 @@ class Operation
     #[Assert\Type('numeric', message: 'Second number must be a number!')]
     private $secondNumber;
 
+    /**
+     * @param $firstNumber
+     * @param $operator
+     * @param $secondNumber
+     */
     public function __construct($firstNumber, $operator, $secondNumber)
     {
         $this->firstNumber = (float) $firstNumber;
@@ -20,7 +25,13 @@ class Operation
         $this->secondNumber = (float) $secondNumber;
     }
 
-    public function calculate()
+    /**
+     * executes the requested operation and returns the result
+     *
+     * @return float
+     * @throws \Exception
+     */
+    public function calculate(): float
     {
         switch ($this->operator) {
             case '+':

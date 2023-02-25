@@ -14,40 +14,40 @@ class CalculatorController extends AbstractController
     #[Route('/calculator', name: 'calculator')]
     public function index(Request $request, ValidatorInterface $validator): Response
     {
-        $result = null;
-        $errors = [];
-        $values = [
-            'firstNumber' => $request->request->get('firstNumber', 0),
-            'operator' => $request->request->get('operator', ""),
-            'secondNumber' => $request->request->get('secondNumber', 0),
+        $data = [
+            'result' => null,
+            'values' => [
+                'firstNumber' => $request->request->get('firstNumber', 0),
+                'operator' => $request->request->get('operator', ""),
+                'secondNumber' => $request->request->get('secondNumber', 0),
+            ]
         ];
         if ($request->isMethod(Request::METHOD_POST)) {
-            // validating data :)
-            $operation = new Operation(
-                $values['firstNumber'],
-                $values['operator'],
-                $values['secondNumber']
-            );
-            foreach ($validator->validate($operation) as  $error) {
-                $errors[] = $error->getMessage();
-            }
+            $data = $this->getTheResult($data, $validator);
+        }
+        return $this->render('calculator/index.html.twig',  $data);
+    }
 
-            if (count($errors) === 0) {
-                try {
-                    $result = $operation->calculate();
-                } catch (\Exception $exception) {
-                    $errors[] = $exception->getMessage();
-//                    $this->addFlash('error', $exception->getMessage());
-                }
+    private function getTheResult(array $data, ValidatorInterface $validator): array
+    {
+        // validating data :)
+        $operation = new Operation(
+            $data['values']['firstNumber'],
+            $data['values']['operator'],
+            $data['values']['secondNumber']
+        );
+        $errors = $validator->validate($operation);
+        foreach ($errors as  $error) {
+            $this->addFlash('error', $error->getMessage());
+        }
+        if (count($errors) === 0) {
+            try {
+                $data['result'] = $operation->calculate();
+            } catch (\Exception $exception) {
+                $this->addFlash('error', $exception->getMessage());
             }
         }
-
-        return $this->render('calculator/index.html.twig',  [
-            'controller_name' => 'CalculatorController',
-            'result' => $result ?? null,
-            'errors' => count($errors) > 0 ? $errors : null,
-            'preset' => $values,
-        ]);
+        return $data;
     }
 
 }

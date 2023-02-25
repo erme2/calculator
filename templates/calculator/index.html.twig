@@ -17,8 +17,8 @@
                     Basic test calculator.
                 {% endif %}
             </p>
-            {% for error in errors %}
-            <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger" role="alert">{{ flashMessage }}</div>
             {% endfor %}
         </div>
 
@@ -27,7 +27,7 @@
                 <div class="row g-3">
                     <div class="col-sm-3">
                         <label for="firstName" class="form-label">First number</label>
-                        <input type="number" class="form-control" name="firstNumber" id="firstNumber" placeholder="0" value="{{ preset['firstNumber'] }}" required>
+                        <input type="number" class="form-control" name="firstNumber" id="firstNumber" placeholder="0" value="{{ values['firstNumber'] }}" required>
                         <div class="invalid-feedback">
                             First number is invalid
                         </div>
@@ -36,15 +36,15 @@
                         <label for="country" class="form-label">Operators</label>
                         <select class="form-select" id="operator" name="operator" required>
                             <option value="">Choose...</option>
-                            <option value="+"{% if preset['operator'] == '+' %}selected{% endif %}>+ (addition)</option>
-                            <option value="-"{% if preset['operator'] == '-' %}selected{% endif %}>- (subtraction)</option>
-                            <option value="*"{% if preset['operator'] == '*' %}selected{% endif %}>* (multiplication)</option>
-                            <option value="/"{% if preset['operator'] == '/' %}selected{% endif %}>/ (division)</option>
+                            <option value="+"{% if values['operator'] == '+' %}selected{% endif %}>+ (addition)</option>
+                            <option value="-"{% if values['operator'] == '-' %}selected{% endif %}>- (subtraction)</option>
+                            <option value="*"{% if values['operator'] == '*' %}selected{% endif %}>* (multiplication)</option>
+                            <option value="/"{% if values['operator'] == '/' %}selected{% endif %}>/ (division)</option>
                         </select>
                     </div>
                     <div class="col-sm-3">
                         <label for="firstName" class="form-label">First number</label>
-                        <input type="number" class="form-control" id="secondNumber" name="secondNumber" placeholder="0" value="{{ preset['secondNumber'] }}" required>
+                        <input type="number" class="form-control" id="secondNumber" name="secondNumber" placeholder="0" value="{{ values['secondNumber'] }}" required>
                         <div class="invalid-feedback">
                             Second number is invalid
                         </div>
@@ -60,10 +60,6 @@
             </form>
         </div>
     </main>
-
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">this is just a test :)</p>
-    </footer>
 </div>
 
 <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
