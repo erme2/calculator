@@ -34,7 +34,7 @@ class OperationTest extends TestCase
 
     public function testCalculateDivideByZero()
     {
-        $this->expectException(\DivisionByZeroError::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Division by zero');
         $operation = new Operation(5, '/', 0);
         $operation->calculate();

@@ -42,12 +42,12 @@ class Operation
                 return $this->firstNumber * $this->secondNumber;
             case '/':
                 if ($this->secondNumber == 0) {
-                    throw new \DivisionByZeroError('Division by zero');
+                    throw new \Exception('Division by zero');
                 } else {
                     return $this->firstNumber / $this->secondNumber;
                 }
             default:
-                    throw new \Exception('Invalid operator');
+                throw new \Exception('Invalid operator');
         }
     }
 }
