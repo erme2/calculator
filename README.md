@@ -10,3 +10,9 @@ composer install
 symfony server:start
 ```
 
+## Testing
+To run the tests, run the following command in the terminal:
+
+```bash
+php bin/phpunit
+```

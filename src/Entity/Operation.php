@@ -41,11 +41,13 @@ class Operation
             case '*':
                 return $this->firstNumber * $this->secondNumber;
             case '/':
-                if ($this->secondNumber === 0) {
-                    throw new \Exception('Division by zero is not allowed!');
+                if ($this->secondNumber == 0) {
+                    throw new \DivisionByZeroError('Division by zero');
                 } else {
                     return $this->firstNumber / $this->secondNumber;
                 }
+            default:
+                    throw new \Exception('Invalid operator');
         }
     }
 }
